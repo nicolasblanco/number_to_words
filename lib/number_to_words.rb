@@ -1,5 +1,6 @@
 class NumberToWords
   ENGLISH_MAP = {
+    0 => '',
     1 => 'one',
     2 => 'two',
     3 => 'three',
@@ -36,7 +37,7 @@ class NumberToWords
     700 => 'seven hundred',
     800 => 'eight hundred',
     900 => 'nine hundred'
-  }
+  }.freeze
 
   DELIMITERS = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintrillion"]
 
@@ -50,6 +51,7 @@ class NumberToWords
   end
 
   def self.convert(number)
+    return 'zero' if number.zero?
     ary = number.to_s.rjust(((number.to_s.size) / 3.0).ceil * 3, '0').scan(/.{3}/)
 
     ary.each_with_index.inject('') do |m, (element, index)|
